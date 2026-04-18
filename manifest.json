@@ -1,0 +1,21 @@
+{
+    "name": "Konfitura - Zgłoszenia",
+    "short_name": "Konfitura",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#f8f9fa",
+    "theme_color": "#d9534f",
+    "description": "Aplikacja do zgłaszania nieprawidłowości społecznych.",
+    "icons": [
+        {
+            "src": "icons/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
