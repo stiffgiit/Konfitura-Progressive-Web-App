@@ -3,7 +3,6 @@ if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('src/js/sw.js').catch(err => console.error(err));
     });
 }
-
 const video = document.getElementById('videoElement');
 const canvas = document.getElementById('canvasElement');
 const photoPreview = document.getElementById('photoPreview');
@@ -124,6 +123,9 @@ shareBtn.addEventListener('click', async () => {
     } else {
         alert('Udostępnianie plików nie jest wspierane. Spróbuj udostępnić sam link w inny sposób.');
     }
+
+    
 });
+
 
 startCamera();
