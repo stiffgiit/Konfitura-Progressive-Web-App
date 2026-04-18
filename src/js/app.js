@@ -129,3 +129,25 @@ shareBtn.addEventListener('click', async () => {
 
 
 startCamera();
+
+let offlineBanner = null;
+
+window.addEventListener('offline', () => {
+    if (!offlineBanner) {
+        offlineBanner = document.createElement('div');
+        offlineBanner.innerText = 'Jesteś offline';
+        offlineBanner.style.background = 'red';
+        offlineBanner.style.color = 'white';
+        offlineBanner.style.textAlign = 'center';
+        offlineBanner.style.padding = '5px';
+
+        document.body.prepend(offlineBanner);
+    }
+});
+
+window.addEventListener('online', () => {
+    if (offlineBanner) {
+        offlineBanner.remove();
+        offlineBanner = null;
+    }
+});
