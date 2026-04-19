@@ -1,6 +1,6 @@
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('src/js/sw.js').catch(err => console.error(err));
+        navigator.serviceWorker.register('/sw.js').catch(err => console.error(err));
     });
 }
 const video = document.getElementById('videoElement');
@@ -135,13 +135,18 @@ let offlineBanner = null;
 window.addEventListener('offline', () => {
     if (!offlineBanner) {
         offlineBanner = document.createElement('div');
-        offlineBanner.innerText = 'Jesteś offline';
-        offlineBanner.style.background = 'red';
+        offlineBanner.innerText = 'Jesteś w trybie offline';
+        offlineBanner.style.background = 'black';
         offlineBanner.style.color = 'white';
         offlineBanner.style.textAlign = 'center';
-        offlineBanner.style.padding = '5px';
+        offlineBanner.style.padding = '3px';
+        offlineBanner.style.fontSize = '12px';
+        offlineBanner.style.position = 'sticky';
+        offlineBanner.style.top = '0';
+        offlineBanner.style.zIndex = '1000';
 
-        document.body.prepend(offlineBanner);
+        const main = document.querySelector('main');
+        main.prepend(offlineBanner);
     }
 });
 
