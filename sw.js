@@ -1,4 +1,4 @@
-const CACHE_NAME = 'konfitura-cache-v9';
+const CACHE_NAME = 'konfitura-cache-v10';
 
 const ASSETS = [
     './index.html',
