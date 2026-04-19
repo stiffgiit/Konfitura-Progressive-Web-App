@@ -114,7 +114,7 @@ locateBtn.addEventListener('click', () => {
 shareBtn.addEventListener('click', async () => {
     const file = new File([capturedBlob], 'konfitura-zgloszenie.jpg', {type: 'image/jpeg'});
     const mapsLink = `https://www.google.com/maps/search/?api=1&query=${currentLat},${currentLng}`;
-    const shareText = `Zobacz zgłoszenie nieprawidłowości z lokalizacji: ${mapsLink}`;
+    const shareText = `Zgłoszenie nieprawidłowości z lokalizacji: ${mapsLink}`;
 
     const shareData = {
         title: 'Zgłoszenie - Konfitura',
