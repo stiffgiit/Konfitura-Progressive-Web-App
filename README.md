@@ -31,3 +31,5 @@ Dzięki wykorzystaniu nowoczesnych interfejsów API przeglądarki, aplikacja umo
 |:----------------|:--------------------|:----------------------|
 | Stanisław       | Froń                | 234643                |
 ---
+| Dominik     | Kawula                | 233856               |
+---
