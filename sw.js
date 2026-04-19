@@ -3,14 +3,15 @@ const CACHE_NAME = 'konfitura-cache-v5';
 const ASSETS = [
     '/',
     '/index.html',
-    '/src/css/style.css',
-    '/src/js/app.js',
     '/manifest.json',
     '/icons/icon-192x192.png',
     '/icons/icon-512x512.png',
-    'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css',
-    'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
-    'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'
+    '/src/css/bootstrap.min.css',
+    '/src/css/leaflet.css',
+    '/src/css/style.css',
+    '/src/js/leaflet.js',
+    '/src/js/bootstrap.bundle.min.js',
+    '/src/js/app.js',
 ];
 
 self.addEventListener('install', event => {
