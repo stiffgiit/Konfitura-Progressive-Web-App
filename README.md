@@ -30,6 +30,6 @@ Dzięki wykorzystaniu nowoczesnych interfejsów API przeglądarki, aplikacja umo
 | Imię            | Nazwisko            | Nr grupy dziekańskiej |
 |:----------------|:--------------------|:----------------------|
 | Stanisław       | Froń                | 234643                |
----
-| Dominik     | Kawula                | 233856               |
----
+|:----------------|:--------------------|:----------------------|
+| Dominik         | Kawula              | 233856                |
+|:----------------|:--------------------|:----------------------|
