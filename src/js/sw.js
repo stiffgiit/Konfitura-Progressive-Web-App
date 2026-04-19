@@ -1,7 +1,6 @@
 const CACHE_NAME = 'konfitura-cache-v5';
 
 const ASSETS = [
-    '/',
     '/index.html',
     '/manifest.json',
     '/icons/icon-192x192.png',
