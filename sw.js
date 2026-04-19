@@ -1,4 +1,4 @@
-const CACHE_NAME = 'konfitura-cache-v8';
+const CACHE_NAME = 'konfitura-cache-v9';
 
 const ASSETS = [
     './index.html',
@@ -34,16 +34,17 @@ self.addEventListener('activate', event => {
 
 
 self.addEventListener('fetch', event => {
-    if (event.request.mode === 'navigate') {
-        event.respondWith(
-            caches.match('/index.html')
-        );
-        return;
-    }
-
     event.respondWith(
         caches.match(event.request).then(response => {
-            return response || fetch(event.request);
+            if (response) {
+                return response;
+            }
+            return fetch(event.request).catch(() => {
+                return new Response('', {
+                    status: 404,
+                    statusText: 'Not Found'
+                });
+            });
         })
     );
 });
