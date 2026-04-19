@@ -1,8 +1,9 @@
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('src/js/sw.js').catch(err => console.error(err));
+        navigator.serviceWorker.register('./sw.js').catch(err => console.error(err));
     });
 }
+
 const video = document.getElementById('videoElement');
 const canvas = document.getElementById('canvasElement');
 const photoPreview = document.getElementById('photoPreview');
@@ -18,13 +19,24 @@ let currentLng = null;
 let capturedBlob = null;
 let stream = null;
 
+function showAppModal(message, isPrompt = false, promptValue = '') {
+    const modalBody = document.getElementById('infoModalBody');
+    if (isPrompt) {
+        modalBody.innerHTML = `<p>${message}</p><input type="text" class="form-control" value="${promptValue}" readonly>`;
+    } else {
+        modalBody.innerHTML = `<p>${message}</p>`;
+    }
+    const modalInstance = new bootstrap.Modal(document.getElementById('infoModal'));
+    modalInstance.show();
+}
+
 async function startCamera() {
     try {
-        stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+        stream = await navigator.mediaDevices.getUserMedia({video: {facingMode: 'environment'}});
         video.srcObject = stream;
     } catch (err) {
         console.error(err);
-        alert('Brak dostępu do kamery.');
+        showAppModal('Brak dostępu do kamery.');
     }
 }
 
@@ -90,43 +102,57 @@ locateBtn.addEventListener('click', () => {
             },
             err => {
                 console.error(err);
-                alert('Nie udało się pobrać lokalizacji. Upewnij się, że GPS jest włączony.');
+                showAppModal('Nie udało się pobrać lokalizacji. Upewnij się, że GPS jest włączony.');
             },
-            { enableHighAccuracy: true }
+            {enableHighAccuracy: true}
         );
     } else {
-        alert('Geolokalizacja nie jest wspierana w tej przeglądarce.');
+        showAppModal('Geolokalizacja nie jest wspierana w tej przeglądarce.');
     }
 });
 
 shareBtn.addEventListener('click', async () => {
-    if (!navigator.canShare) {
-        alert('Twoja przeglądarka nie wspiera Web Share API.');
-        return;
-    }
-
-    const file = new File([capturedBlob], 'konfitura-zgloszenie.jpg', { type: 'image/jpeg' });
-    const mapsLink = `https://www.openstreetmap.org/?mlat=${currentLat}&mlon=${currentLng}#map=18/${currentLat}/${currentLng}`;
+    const file = new File([capturedBlob], 'konfitura-zgloszenie.jpg', {type: 'image/jpeg'});
+    const mapsLink = `https://www.google.com/maps/search/?api=1&query=${currentLat},${currentLng}`;
+    const shareText = `Zobacz zgłoszenie nieprawidłowości z lokalizacji: ${mapsLink}`;
 
     const shareData = {
         title: 'Zgłoszenie - Konfitura',
-        text: `Zobacz zgłoszenie z lokalizacji: ${mapsLink}`,
+        text: shareText,
         files: [file]
     };
 
-    if (navigator.canShare(shareData)) {
+    let canUseWebShare = false;
+    if (navigator.canShare && navigator.canShare(shareData)) {
+        canUseWebShare = true;
+    }
+
+    if (canUseWebShare) {
         try {
+            await navigator.clipboard.writeText(shareText);
+            showAppModal('Link do mapy został skopiowany do schowka. Jeśli komunikator wyśle samo zdjęcie, wklej link z lokalizacją w wiadomości tekstowej.');
             await navigator.share(shareData);
         } catch (err) {
             console.error(err);
         }
     } else {
-        alert('Udostępnianie plików nie jest wspierane. Spróbuj udostępnić sam link w inny sposób.');
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(capturedBlob);
+        link.download = 'konfitura-zgloszenie.jpg';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        const encodedMessage = encodeURIComponent(shareText);
+        const encodedSubject = encodeURIComponent('Zgłoszenie - Konfitura');
+
+        document.getElementById('btnShareWhatsApp').href = `https://web.whatsapp.com/send?text=${encodedMessage}`;
+        document.getElementById('btnShareEmail').href = `mailto:?subject=${encodedSubject}&body=${encodedMessage}`;
+
+        const desktopModal = new bootstrap.Modal(document.getElementById('desktopShareModal'));
+        desktopModal.show();
     }
-
-    
 });
-
 
 startCamera();
 
