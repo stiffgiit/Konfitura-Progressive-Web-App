@@ -11,6 +11,11 @@ const ASSETS = [
     '/src/js/leaflet.js',
     '/src/js/bootstrap.bundle.min.js',
     '/src/js/app.js',
+    '/images/layers.png',
+    '/images/layers-2x.png',
+    '/images/marker-icon.png',
+    '/images/marker-icon-2x.png',
+    '/images/marker-shadow.png',
 ];
 
 self.addEventListener('install', event => {
